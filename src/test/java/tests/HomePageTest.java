@@ -11,7 +11,7 @@ import utils.EnumHelper;
 public class HomePageTest extends BaseTest{
 
     @Test
-    public void test1() {
+    public void test() {
         HomePage homePage = new HomePage();
         goToURL("/");
 
