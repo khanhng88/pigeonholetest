@@ -14,12 +14,12 @@ import java.util.List;
 
 
 public class AgendaPage {
-    private int invisibleTimeOutForModalBoxTick = 8;
+    private int invisibleTimeOutForModalBoxTick = 6;
     private By enterQnASel = By.cssSelector(".session-qna .btn-text");
 
     private By sessionInfoSel = By.className("sessionlist-session-info");
     private By questionInputSel = By.cssSelector(".question-input-container textarea");
-    private By sortSel = By.cssSelector("#sort-menu");
+    private By sortSel = By.cssSelector("#sort-menu button");
     private By questionCountSel = By.className("question-count");
     private By askSel = By.className("question-input-btn");
     private By commentSel = By.id("comment-input");
@@ -86,14 +86,16 @@ public class AgendaPage {
 
     public void sortTo(String sortType) {
         btnSort().click();
-        List<PigeonWebElement> sortOptions = btnSort().findElements(By.tagName("li"));
+        PigeonWebElement dropDownMenu = new PigeonWebElement(By.cssSelector("#sort-menu .select-menu-container ul"));
+        ActionHelper.waitForElementVisible(dropDownMenu.getWebElement());
+        List<PigeonWebElement> sortOptions = dropDownMenu.findElements(By.tagName("li"));
         for (PigeonWebElement sortOption : sortOptions) {
             if(sortOption.getText().contentEquals(sortType)) {
                 sortOption.click();
+                ActionHelper.waitForQuestionsLoading();
+                break;
             }
         }
-
-
     }
 
     public void submitQuestion(String question) {
@@ -102,7 +104,7 @@ public class AgendaPage {
         Assert.assertTrue(sessionName().matches("Q&A"), "[ERR] Page Q&A should be navigated.");
         txtAreaQuestionInput().sendKeys(question);
         btnAsk().click();
-        waitForModalMsg();
+        waitForModalMsg("Your question has been posted.");
     }
 
     public void addComment(String commentValue) {
@@ -114,7 +116,7 @@ public class AgendaPage {
         txtComment().click();
         txtComment().sendKeys(commentValue);
         btnSubmitComment().click();
-        waitForModalMsg();
+        waitForModalMsg("Your comment has been posted.");
     }
 
     public void voteUpForComment() {
@@ -123,11 +125,10 @@ public class AgendaPage {
         ActionHelper.waitForElementAttributeContains(voteUpComment.getWebElement(),"class", "active");
     }
 
-    public void waitForModalMsg() {
+    public void waitForModalMsg(String msgContent) {
         WebDriverWait wait = new WebDriverWait(Driver.getWebDriver(), invisibleTimeOutForModalBoxTick);
-        wait.until(ExpectedConditions.invisibilityOfAllElements(Driver.getWebDriver().findElement(modalBoxTickSel),
-                Driver.getWebDriver().findElement(By.className("modal-tick")),
-                Driver.getWebDriver().findElement(By.id("modal-feedback-heading"))));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.className("modal-box-tick"),msgContent));
+        wait.until(ExpectedConditions.invisibilityOf(Driver.getWebDriver().findElement(By.id("modal-feedback-heading"))));
     }
 
 }

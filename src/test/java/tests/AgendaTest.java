@@ -1,14 +1,12 @@
 package tests;
 
-import driver.Driver;
 import model.pages.AgendaPage;
 import model.pages.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.Assertion;
 import utils.EnumHelper;
 
-public class HomePageTest extends BaseTest{
+public class AgendaTest extends BaseTest{
 
     @Test
     public void test() {

@@ -14,7 +14,7 @@ public class Driver {
 
     private static WebDriver driver;
     private static String browser;
-    public static final int globalTimeOut = 5;
+    public static final int GLOBAL_TIME_OUT = 2;
 
     public Driver(String browser) {
         this.browser = browser;
@@ -46,7 +46,7 @@ public class Driver {
         chromeOptions.addArguments("--incognito");
 
         ChromeDriver driver = new ChromeDriver(chromeOptions);
-        driver.manage().timeouts().implicitlyWait(globalTimeOut, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(GLOBAL_TIME_OUT, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         return driver;
     }
@@ -62,7 +62,7 @@ public class Driver {
         options.setProfile(firefoxProfile);
 
         FirefoxDriver driver = new FirefoxDriver(options);
-        driver.manage().timeouts().implicitlyWait(globalTimeOut, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(GLOBAL_TIME_OUT, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         return driver;
     }

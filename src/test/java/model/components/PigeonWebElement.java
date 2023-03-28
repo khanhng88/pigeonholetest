@@ -36,12 +36,13 @@ public class PigeonWebElement {
     public void sendKeys(String value) {
         ActionHelper.waitForElementVisible(this.webElement);
         ActionHelper.scrollIntoElement(this.webElement);
+        this.webElement.click();
         this.webElement.sendKeys(value);
     }
 
     public void click() {
-        ActionHelper.waitForElementVisible(this.webElement);
         ActionHelper.scrollIntoElement(this.webElement);
+        ActionHelper.waitForElementClickable(this.webElement);
         this.webElement.click();
     }
 
