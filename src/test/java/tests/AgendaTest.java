@@ -17,7 +17,7 @@ public class AgendaTest extends BaseTest{
         homePage.enterEventPassCode("PIGEONQATEST");
         homePage.enterAttendeePassCode("RT8Y1248LJ");
 
-        //submit a question, need verifications
+        //submit a question
         AgendaPage agendaPage = new AgendaPage();
         String sessionTitle = "Pigeonlab QA Test";
         String sessionDescription = "Welcome! All available sessions are shown below.";
@@ -27,11 +27,11 @@ public class AgendaTest extends BaseTest{
         agendaPage.sortTo(EnumHelper.SortType.Latest.value());
         Assert.assertTrue(agendaPage.latestQuestion().getText().contains("PIGEONQATEST"), "[ERR] Your question is not posted.");
 
-        //submit comment, need verifications
+        //submit comment
         agendaPage.addComment("PIGEONQATEST");
         Assert.assertTrue(agendaPage.latestComment().isDisplayed(), "[ERR] Posted comment should appear.");
 
-        //vote a comment, need verifications
+        //vote a comment
         int beforeUpVoteNum = Integer.parseInt(agendaPage.upVoteComment().getText());
         agendaPage.voteUpForComment();
 
