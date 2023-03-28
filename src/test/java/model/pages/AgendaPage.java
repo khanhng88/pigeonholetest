@@ -4,17 +4,15 @@ import driver.Driver;
 import model.components.PigeonWebElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import utils.ActionHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class AgendaPage {
-    private int invisibleTimeOutForModalBoxTick = 6;
+    private int INVISIBLE_TIME_OUT_FOR_MODAL_MSG = 6;
     private By enterQnASel = By.cssSelector(".session-qna .btn-text");
 
     private By sessionInfoSel = By.className("sessionlist-session-info");
@@ -126,7 +124,7 @@ public class AgendaPage {
     }
 
     public void waitForModalMsg(String msgContent) {
-        WebDriverWait wait = new WebDriverWait(Driver.getWebDriver(), invisibleTimeOutForModalBoxTick);
+        WebDriverWait wait = new WebDriverWait(Driver.getWebDriver(), INVISIBLE_TIME_OUT_FOR_MODAL_MSG);
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.className("modal-box-tick"),msgContent));
         wait.until(ExpectedConditions.invisibilityOf(Driver.getWebDriver().findElement(By.id("modal-feedback-heading"))));
     }
